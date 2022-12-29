@@ -15,9 +15,44 @@ Use this commands inside an angular project.
 | `ng update`                           | Update your angular project             |                                                                                                                                                                                                                                     |
 | `ng version`                          | Outputs Angular CLI version             |                                                                                                                                                                                                                                     |
 
+## Architecture
+The architecture is one of the most important aspects of any application. There are many ways one can structure an Angular app. Every design decision has its own set of benefits and draw-backs.  Let's take a look at the following diagram of the final architecture we want to achieve. 
+![Angular architecture](https://miro.medium.com/max/1400/1*25fSJMgktZZjUmVdJNI30Q.webp)
+
+Let's explore the different parts 
+   - **CORE**: The things that are absolutely essential for the app to start. Core directory is the place where we should put singleton services, injection tokens, constants, app configurations, pipes, interceptors, guards, auth service, utils, etc. that will be used across the suite.
+    > Services that are specific to a feature can go in the feature folder.
+   - **FEATURES**: are all organized into their own folder, they’re all self-contained and everything it’s pretty easy to find for that given feature. Business features live in this `features` directory. The idea is to make a module per feature. That module can contain components, directives, pipes, services, interfaces, enums, utils, and so on. The concept is to keep things close.
+    > `Feature` modules shouldn't be dependant on other modules other than the services provided by `CoreModule` and features exported by `SharedModule`
+   - **SHARED**: Consider `shared` directory module as a mini-library for the UI components or for third-party components. They are not specific to a single business feature. They should be super dumb that you can take all the components, drop in another angular project, and expect to work (given the dependencies are met). This module can be then imported to each feature module.
+    > Do not make a giant `SharedModule`, rather granularize each atomic feature into its own module.
+ 
+ If you have any doubt of where something goes:
+ ![Angular architecture tree decision](https://miro.medium.com/max/1124/1*22skrCDLM6C3oRTuIecIng.webp)
+
+### Personal tips
+Personally in my latests projects on top of previous characteristics I add a couple of layyers. This totally depends on the requirements of the specific application that you wanna build.
+- **API LAYER**: contains all the _API-related_ files in a folder called `API` inside `core` folder. The idea is that only the files related to the back-end will live inside that folder
+  - These services will have no business logic, their responsibility will only be to call the backend, do data transformations and return the data. 
+  - There should be one service per controller under a folder with the name of the module
+  - The name of the service should be `ControllerName+ ApiService` and the `fileName` `controller-name.api.service.ts`
+  - In the folder `core/api/api-routes` we are going to create one file per module with all the **routes** of that module. The name of that file would be `featureX-api.routes.ts`
+
+- **LAYOUT**:  If you have an app where you repeat the layout I strongly recommend you to create an extra feature, called `layout`, that contains the `main-layout` (shared a across al the app) and the `empty-layout` (parts of the app the doesn't requiere a layout such as the login) 
+  > The idea with the `main-layout` is to load the content of each page inside that layout that contains, for example, a common menu and a footer.
+
+- Sometimes I also differenciate between `components` and `pages`. For angular are exactly the same but I create a folder inside each lazy feature, one for _pages_ and one per _components_. “Page” is just terminology to identify a component that is being used as a screen. Each route of the feature module has a page under `/page` folder.
+
+
+
+#### 🔗 Key links
+* [Build an epic architecture in Angular](https://tomastrajan.medium.com/how-to-build-epic-angular-app-with-clean-architecture-91640ed1656)
+* [Planning the architecture of your angular app](https://itnext.io/planning-the-architecture-of-your-angular-app-a4840bfec13b)
+* [Angular guide architecture](https://angular.io/guide/architecture)
+
 ## Best practices
 Of course these are my **own best practices** that I'm learning on the fly with experience. I'll try to have all in mind once I'm starting a new project. Some of them are not specifically from Angular projects but could apply to any software project.
-
+   
 ### LIFT principle
 This principle helps you to find code quickly. That's mean: 
 - _**L**ocate the easily_ 
@@ -64,17 +99,21 @@ you never know when the service will need to inject another one (dependency inje
 - Use the power of Angular CLI
 - Take advantage of Angular life cycle hooks 
 
-
-
-
   
 ## Q&A
 General questions (with answers!)
+
 ### What's AOT ([Ahead-of-time](https://angular.io/guide/aot-compiler))? 
+<details>
+  <summary></summary>
 An Angular application consists primarily of components and their HTML templates. Because the components and templates provided by Angular cannot be understood by the browser directly, Angular applications require a compilation process before they can run in a browser. The Angular ahead-of-time (AOT) compiler converts your Angular HTML and TypeScript code into efficient JavaScript code during the build phase before the browser downloads and executes that code.
+</details>
 
 ### What's Lazy-loading? 
-By default Angular applications load all the components that are imported into the main module (`app.module.ts`). This may mean loading modules that the user will not use at any time. Lazy loading is a design pattern to delay the loading of an object until the very moment of its use. That is, if we implement lazy loading in Angular we will load only the modules we need at the beginning of the application and the others on demand as we need them
+<details>
+  <summary></summary>
+  By default Angular applications load all the components that are imported into the main module (`app.module.ts`). This may mean loading modules that the user will not use at any time. Lazy loading is a design pattern to delay the loading of an object until the very moment of its use. That is, if we implement lazy loading in Angular we will load only the modules we need at the beginning of the application and the others on demand as we need them
+</details>
 
 ## Angular coding tools
 Collection of extensions/plugins/misc that I use for coding angular
