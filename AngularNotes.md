@@ -21,11 +21,11 @@ The architecture is one of the most important aspects of any application. There 
 
 Let's explore the different parts 
    - **CORE**: The things that are absolutely essential for the app to start. Core directory is the place where we should put singleton services, injection tokens, constants, app configurations, pipes, interceptors, guards, auth service, utils, etc. that will be used across the suite.
-    > Services that are specific to a feature can go in the feature folder.
+> Services that are specific to a feature can go in the feature folder.
    - **FEATURES**: are all organized into their own folder, they’re all self-contained and everything it’s pretty easy to find for that given feature. Business features live in this `features` directory. The idea is to make a module per feature. That module can contain components, directives, pipes, services, interfaces, enums, utils, and so on. The concept is to keep things close.
-    > `Feature` modules shouldn't be dependant on other modules other than the services provided by `CoreModule` and features exported by `SharedModule`
+> `Feature` modules shouldn't be dependant on other modules other than the services provided by `CoreModule` and features exported by `SharedModule`
    - **SHARED**: Consider `shared` directory module as a mini-library for the UI components or for third-party components. They are not specific to a single business feature. They should be super dumb that you can take all the components, drop in another angular project, and expect to work (given the dependencies are met). This module can be then imported to each feature module.
-    > Do not make a giant `SharedModule`, rather granularize each atomic feature into its own module.
+> Do not make a giant `SharedModule`, rather granularize each atomic feature into its own module.
  
  If you have any doubt of where something goes:
  ![Angular architecture tree decision](https://miro.medium.com/max/1124/1*22skrCDLM6C3oRTuIecIng.webp)
@@ -39,7 +39,7 @@ Personally in my latests projects on top of previous characteristics I add a cou
   - In the folder `core/api/api-routes` we are going to create one file per module with all the **routes** of that module. The name of that file would be `featureX-api.routes.ts`
 
 - **LAYOUT**:  If you have an app where you repeat the layout I strongly recommend you to create an extra feature, called `layout`, that contains the `main-layout` (shared a across al the app) and the `empty-layout` (parts of the app the doesn't requiere a layout such as the login) 
-  > The idea with the `main-layout` is to load the content of each page inside that layout that contains, for example, a common menu and a footer.
+> The idea with the `main-layout` is to load the content of each page inside that layout that contains, for example, a common menu and a footer.
 
 - Sometimes I also differenciate between `components` and `pages`. For angular are exactly the same but I create a folder inside each lazy feature, one for _pages_ and one per _components_. “Page” is just terminology to identify a component that is being used as a screen. Each route of the feature module has a page under `/page` folder.
 
