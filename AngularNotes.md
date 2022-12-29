@@ -2,7 +2,15 @@
 
 A bit of everything about angular.
 
-## Commands [Angular CLI](https://angular.io/cli)
+
+## Table of Contents
+1. [Useful commands](#commands)
+2. [Architecture](#architecture)
+3. [Best practices](#best-practices)
+4. [Q&A](#q&a)
+5. [Coding tools](#coding-tools)
+
+## Commands ([Angular CLI](https://angular.io/cli))
 Use this commands inside an angular project.
 
 | Command                               | Description                             | Notes                                                                                                                                                                                                                               |
@@ -30,7 +38,7 @@ Let's explore the different parts
  If you have any doubt of where something goes:
  ![Angular architecture tree decision](https://miro.medium.com/max/1124/1*22skrCDLM6C3oRTuIecIng.webp)
 
-### Personal tips
+### Personal architecture tips
 Personally in my latests projects on top of previous characteristics I add a couple of layyers. This totally depends on the requirements of the specific application that you wanna build.
 - **API LAYER**: contains all the _API-related_ files in a folder called `API` inside `core` folder. The idea is that only the files related to the back-end will live inside that folder
   - These services will have no business logic, their responsibility will only be to call the backend, do data transformations and return the data. 
@@ -39,9 +47,9 @@ Personally in my latests projects on top of previous characteristics I add a cou
   - In the folder `core/api/api-routes` we are going to create one file per module with all the **routes** of that module. The name of that file would be `featureX-api.routes.ts`
 
 - **LAYOUT**:  If you have an app where you repeat the layout I strongly recommend you to create an extra feature, called `layout`, that contains the `main-layout` (shared a across al the app) and the `empty-layout` (parts of the app the doesn't requiere a layout such as the login) 
-> The idea with the `main-layout` is to load the content of each page inside that layout that contains, for example, a common menu and a footer.
+> The idea with the `main-layout` is to load the content of each page inside that layout that contains, for example, a common menu and a footer that are repeated accross the entire app.
 
-- Sometimes I also differenciate between `components` and `pages`. For angular are exactly the same but I create a folder inside each lazy feature, one for _pages_ and one per _components_. “Page” is just terminology to identify a component that is being used as a screen. Each route of the feature module has a page under `/page` folder.
+- Sometimes I also differenciate between **components** and **pages**. For angular are exactly the same but I create a folder inside each lazy feature, one for _pages_ and one per _components_. “Page” is just terminology to identify a component that is being used as a route. Each route of the feature module has a page under `/page` folder.
 
 
 
@@ -115,10 +123,10 @@ An Angular application consists primarily of components and their HTML templates
   By default Angular applications load all the components that are imported into the main module (`app.module.ts`). This may mean loading modules that the user will not use at any time. Lazy loading is a design pattern to delay the loading of an object until the very moment of its use. That is, if we implement lazy loading in Angular we will load only the modules we need at the beginning of the application and the others on demand as we need them
 </details>
 
-## Angular coding tools
+## Coding tools
 Collection of extensions/plugins/misc that I use for coding angular
 - Browser extension for your favorite browser. More info [here](https://angular.io/guide/devtools)
-- If you are using state in Angular you might encounter useful the [Redux dev tools extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=es). Again is available in any browser.
+- If you are using any state management library in Angular you might encounter useful the [Redux dev tools extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=es). Again is available in any browser.
 - For coding I'm using [visual studio code](https://code.visualstudio.com/). Some extensions:
   - [Angular Language service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)
   - [Alpha order](https://marketplace.visualstudio.com/items?itemName=ue.alphabetical-sorter)
