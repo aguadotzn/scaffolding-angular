@@ -17,7 +17,7 @@ The project use routing and SCSS among other things listed below.
 Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Extra
-Check my angular personal notes [here](./AngularNotes.md) 
+Check my angular personal notes [here](https://github.com/aguadotzn/angular-notes/blob/master/README.md) 
 
 ### License
 
